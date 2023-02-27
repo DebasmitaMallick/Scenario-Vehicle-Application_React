@@ -1,4 +1,7 @@
-# Getting Started with Vehicle Application
+# `Vehicle And Scenario CRUD Application`
+In this project directory, an end to end CRUD application is made using ReactJS. User can add scenarios and vehicles, each of the scenario can have multiple vehicles. User can read, create, update and delete scenarios and vehicles, on deleting a scenario all the vehicles under it will also be deleted.
+
+## `Installation and Setup Instructions`
 
 ### `npm start`
 
@@ -16,3 +19,11 @@ In [http://localhost:3000/vehicles] all the vehicle objects will get stored
 ### `npm intall`
 
 Installs all the dependencies
+
+## `Tools Used`
+### FRONTEND
+- React
+- CSS
+### BACKEND
+- npm install
+- json server
