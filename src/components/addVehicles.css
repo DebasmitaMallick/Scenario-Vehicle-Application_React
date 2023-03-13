@@ -1,18 +1,12 @@
-body {
-    color: white;
-}
-
 .grid-container {
     display: grid;
-    /* grid-template-columns: auto auto auto; */
-    padding: 10px;
-}
-.grid-item {
-    /* background-color: var(--darkgrey); */
-    padding: 20px;
-    /* text-align: center; */
+    padding: 19px 80px 2px 80px;
+    justify-content: space-between;
 }
 
+.addVehiclesContainer {
+    margin-top: 5.5rem;
+}
 .grid-item div {
     text-align: initial;
 }
@@ -22,9 +16,25 @@ select option {
 }
 
 .add-vehicle-form {
+    color: white;
     grid-template-columns: auto auto auto;
     margin: 78px;
     padding: 63px;
     background: var(--dark);
     box-sizing: border-box;
+    box-shadow: 9px 16px 29px 2px rgba(0,0,0,0.58);
+    border-radius: 12px;
+}
+
+@media screen and (max-width: 720px) {
+    .add-vehicle-form {
+        margin: 78px 0;
+        padding: 63px 0;
+    }
+}
+
+@media screen and (max-width: 935px) {
+    .add-vehicle-form {
+        grid-template-columns: auto auto;
+    }
 }

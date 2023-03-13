@@ -3,11 +3,14 @@ import React, {useState} from 'react'
 import {FaPlusCircle, FaPencilAlt, FaTrash} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useActivePage } from '../contexts/ActivePageProvider';
 import DeleteAlert from './DeleteAlert';
 import Modal from './Modal';
 import ScenarioEditBody from './ScenarioEditBody';
 
 function ScenarioItem(props) {
+    const { setActivePage } = useActivePage();
+
     const [showEditModal, setShowEditModal] = useState(false);
     const [name, setName] = useState(props.scenario.name);
     const [time, setTime] = useState(props.scenario.time);
@@ -64,7 +67,7 @@ function ScenarioItem(props) {
                 <td>{name}</td>
                 <td>{time}</td>
                 <td>{props.scenario.vehicles.length}</td>
-                <td><Link to='/addvehiclesform' state={props.scenario}><FaPlusCircle className='add-icon' /></Link></td>
+                <td><Link onClick={() => setActivePage('addvehiclesform')} to='/addvehiclesform' state={props.scenario}><FaPlusCircle className='add-icon' /></Link></td>
                 <td className='pointer' onClick={() => setShowEditModal(true)}><FaPencilAlt className='edit-icon' /></td>
                 <td className='pointer' onClick={confirmDelete}><FaTrash className='trash-icon' /></td>
                 <Modal title='Edit Scenario' onClose={() => setShowEditModal(false)} show={showEditModal} handleSave={editScenario} >

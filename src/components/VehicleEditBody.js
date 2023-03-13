@@ -42,7 +42,7 @@ function VehicleEditBody(props) {
 
                 <label className='grid-item'>Direction <br />
                     <select value={props.direction} onChange={e => props.setDirection(e.target.value)}>
-                        <option value="" disabled selected hidden>Select a direction</option>
+                        <option value="" disabled defaultValue='Select a direction' hidden>Select a direction</option>
                         {directions.map((option) => (
                             <option key={option.value} value={option.value}>{option.label}</option>
                         ))}

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./addScenario.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -33,8 +32,8 @@ function AddScenarioForm() {
   };
 
   return (
-    <>
-      <h1>Add Scenario</h1>
+    <div className="addScenarioContainer">
+      <h1 className="info">Add Scenario</h1>
       <form onSubmit={submitHandler}>
         <div className="scenario">
           <label className="name">
@@ -65,7 +64,7 @@ function AddScenarioForm() {
           Reset
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

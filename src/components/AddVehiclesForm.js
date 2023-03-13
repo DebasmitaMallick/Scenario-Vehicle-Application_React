@@ -87,12 +87,15 @@ function AddVehiclesForm() {
     },
   ];
   return (
-    <>
+    <div className='addVehiclesContainer'>
+      <h2>Add Vehicles</h2>
       <form onSubmit={submitHandler}>
 
         <div className="grid-container add-vehicle-form">
 
-          <ScenarioDropdown scenarios={scenarios} setScenario = {setScenario} scenario={scenario} />
+          <label className='grid-item name'>Scenario <br />
+            <ScenarioDropdown scenarios={scenarios} setScenario = {setScenario} scenario={scenario} />
+          </label>
           
           <label className='grid-item name'>Vehicle Name <br />
               <input type="text" placeholder='Test Scenario' value={vehicleName} onChange={e => setVehicleName(e.target.value)} required />
@@ -112,7 +115,7 @@ function AddVehiclesForm() {
 
           <label className='grid-item name'>Direction <br />
             <select value={direction} onChange={e => setDirection(e.target.value)}>
-              <option value="" disabled selected hidden>Select a direction</option>
+              <option value="" disabled defaultValue hidden>Select a direction</option>
                 {directions.map((option) => (
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
@@ -124,7 +127,7 @@ function AddVehiclesForm() {
         <button className='button green-btn' type='submit'>Add</button>
         <button className='button orange-btn' onClick={resetHandler}>Reset</button>
       </form>
-    </>
+    </div>
   )
 }
 

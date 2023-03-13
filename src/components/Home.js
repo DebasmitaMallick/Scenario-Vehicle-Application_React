@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import VehicleItem from "./VehicleItem";
 import ScenarioDropdown from "./ScenarioDropdown";
-import "./scenarioStyles.css";
 
 function Home() {
   const [scenarios, setScenarios] = useState([]);
@@ -37,51 +36,46 @@ function Home() {
 
   }, [scenario, refreshRequireVehicles]);
   
-
-  if(scenario !== "" && requiredVehicles.length === 0) {
-    return (
-      <>
-        <ScenarioDropdown scenario = {scenario} scenarios={scenarios} setScenario={setScenario} />
-        <h2>No data available</h2>
-      </>
-    )
-  }
-  else if (scenario === "") {
-    return <ScenarioDropdown scenario = {scenario} scenarios={scenarios} setScenario={setScenario} />;
-  }
-
   return (
-    <>
+    <div className='home'>
+      <h1 style={{color: 'white'}}>Welcome to Scenario and Vehicle Application</h1>
       <ScenarioDropdown scenario = {scenario} scenarios={scenarios} setScenario={setScenario} />
-      <div>
-        <table id="vehicles">
-          <thead>
-            <tr>
-              <th>Vehicle id</th>
-              <th>Vehicle Name</th>
-              <th>Position X</th>
-              <th>Position Y</th>
-              <th>Speed</th>
-              <th>Direction</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requiredVehicles.map((vehicle) => {
-              return (
-                <VehicleItem
-                  key={vehicle.id}
-                  vehicle={vehicle}
-                  refresh={setIsRefresh}
-                  isRefresh={isRefresh}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </>
+      { scenario !== '' &&
+        (
+          (requiredVehicles.length) === 0 ? 
+          (<h2 className="info">No data available</h2>)
+          :
+          (
+            <table className="vehicles">
+              <thead>
+                <tr>
+                  <th>Vehicle id</th>
+                  <th>Vehicle Name</th>
+                  <th>Position X</th>
+                  <th>Position Y</th>
+                  <th>Speed</th>
+                  <th>Direction</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {requiredVehicles.map((vehicle) => {
+                  return (
+                    <VehicleItem
+                      key={vehicle.id}
+                      vehicle={vehicle}
+                      refresh={setIsRefresh}
+                      isRefresh={isRefresh}
+                    />
+                  );
+                })}
+              </tbody>
+            </table>
+          )
+        )
+      }
+    </div>
   );
 }
 

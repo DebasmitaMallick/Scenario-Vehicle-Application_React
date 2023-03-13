@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./allScenario.css";
 import DeleteAlert from "./DeleteAlert";
 import ScenarioItem from "./ScenarioItem";
-import "./scenarioStyles.css";
 import { toast } from "react-toastify";
 import axios from "axios";
 import ScenarioItemBtn from "./ScenarioItemBtn";
@@ -28,7 +26,6 @@ function AllScenarios() {
     }
 
     let deleteAllRequests = urls.map((url) => axios.delete(url));
-    // console.log(deleteAllRequests);
 
     axios.all(deleteAllRequests).then((responses) => {
       responses.forEach((resp) => {
@@ -59,19 +56,18 @@ function AllScenarios() {
 
   if(scenarios.length === 0) {
     return (
-      <>
+      <div className="main-container">
         <ScenarioItemBtn cls = {'isInvisible'} delete = {null} clsTxt = {'isInvisible'} />
-        <h1>No data Available</h1>
-      </>
+        <h1 className="info">No data Available</h1>
+      </div>
     )
   }
 
   return (
-    <>
+    <div className="main-container">
       <ScenarioItemBtn cls = {'button orange-btn'} delete = {confirmDelete} clsTxt = {''} />
 
       <div id="all-scenarios">
-        <h1>All Scenarios</h1>
         <table id="scenarios">
           <thead>
             <tr>
@@ -98,7 +94,7 @@ function AllScenarios() {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }
 

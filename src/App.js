@@ -13,6 +13,7 @@ import {
   Route
 } from "react-router-dom";
 import Navbar from './components/Navbar';
+import CarGrid from './components/CarGrid';
 toast.configure();
 
 function App() {
@@ -20,12 +21,12 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <div className='main-comp-container'>
+        <div>
           <Routes>
             <Route path='/addscenario' element={<AddScenarioForm/>} />
             <Route path='/allscenarios' element={<AllScenarios/>} />
             <Route path='/addvehiclesform' element={<AddVehiclesForm/>} />
-            <Route path='/' element={<Home/>} />
+            <Route path='/' element={<CarGrid/>} />
           </Routes>
         </div>
       </Router>
