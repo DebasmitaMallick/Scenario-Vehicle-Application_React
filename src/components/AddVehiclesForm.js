@@ -2,133 +2,230 @@ import React, {useEffect, useState} from 'react'
 import { useLocation } from 'react-router-dom';
 import './addVehicles.css';
 import axios from 'axios';
-import ScenarioDropdown from './ScenarioDropdown';
 import { toast } from "react-toastify";
+import { motion } from "framer-motion/dist/framer-motion";
+import { Form } from 'semantic-ui-react';
+import { useForm } from "react-hook-form";
 
 function AddVehiclesForm() {
+  const directions = [
+    {
+      label: "towards",
+      value: "towards",
+    },
+    {
+      label: "backwards",
+      value: "backwards",
+    },
+    {
+      label: "upwards",
+      value: "upwards",
+    },
+    {
+      label: "downwards",
+      value: "downwards",
+    },
+  ];
   const location = useLocation();
   const [scenarios, setScenarios] = useState([]);
-  const [scenario, setScenario] = useState(location.state ? location.state.id : '');
-  const [vehicleName, setVehicleName] = useState('');
-  const [speed, setSpeed] = useState('');
-  const [positionX, setPositionX] = useState('');
-  const [positionY, setPositionY] = useState('');
-  const [direction, setDirection] = useState('');
-  const [prev, setPrev] = useState([]);
   const appUrl = process.env.REACT_APP_APP_URL;
 
-    const submitHandler = (e) => {
+    const onSubmit = (data) => {
       let x = [];
-      //let y;
-      e.preventDefault();
+
       let vehicleId = Math.floor(Math.random()*1000);
       axios
       .post(`${appUrl}/vehicles`, {
         id: vehicleId,
-        name: vehicleName,
-        speed: speed,
-        positionX: positionX,
-        positionY: positionY,
-        direction: direction,
-        scenarioId: scenario
+        name: data.vehicleName,
+        speed: data.speed,
+        positionX: data.positionX,
+        positionY: data.positionY,
+        direction: data.direction,
+        scenarioId: data.scenario
       })
       .then(() => {
         //update parent scenario
-        axios.get(`${appUrl}/scenarios/${scenario}`).then((res) => {
+        axios.get(`${appUrl}/scenarios/${data.scenario}`).then((res) => {
           x = res.data.vehicles;
           x.push(vehicleId);
           const temp = x;
           axios
-          .patch(`${appUrl}/scenarios/${scenario}`, {
+          .patch(`${appUrl}/scenarios/${data.scenario}`, {
               vehicles : temp
           }).then(() => {
             toast.success("Added Successfully", {
               position: toast.POSITION.TOP_CENTER,
-              autoClose: 3000,
+              autoClose: 1000,
             });
             resetHandler();
-            setPrev([]);
           });
           });
       });
     }
-    
-    const resetHandler = e => {
-      setScenario('');
-      setVehicleName('');
-      setSpeed('');
-      setPositionX('');
-      setPositionY('');
-      setDirection('');
-    }
   
+    const { 
+      register, handleSubmit, resetField, formState: { errors, dirtyFields, isValid, isSubmitted } 
+    } = useForm({
+      defaultValues: {
+        scenario : location.state ? location.state.id : '',
+        vehicleName : '',
+        positionX : null,
+        positionY : null,
+        speed : null,
+        direction : ''
+      }
+    });
+    
     useEffect(() => {
         axios.get(`${appUrl}/scenarios`).then((response) => {
             setScenarios(response.data);
           });
     }, []);
 
-  const directions = [
-    {
-      label: "Towards",
-      value: "Towards",
-    },
-    {
-      label: "Backwards",
-      value: "Backwards",
-    },
-    {
-      label: "Upwards",
-      value: "Upwards",
-    },
-    {
-      label: "Downwards",
-      value: "Downwards",
-    },
-  ];
-  return (
-    <div className='addVehiclesContainer'>
-      <h2>Add Vehicles</h2>
-      <form onSubmit={submitHandler}>
+    const resetHandler = () => {
+      resetField('scenario');
+      resetField('vehicleName');
+      resetField('positionX');
+      resetField('positionY');
+      resetField('speed');
+    }
 
-        <div className="grid-container add-vehicle-form">
+    return (
+      <div className='addVehiclesContainer'>
+        <h2>Add Vehicles</h2>
 
-          <label className='grid-item name'>Scenario <br />
-            <ScenarioDropdown scenarios={scenarios} setScenario = {setScenario} scenario={scenario} />
-          </label>
-          
-          <label className='grid-item name'>Vehicle Name <br />
-              <input type="text" placeholder='Test Scenario' value={vehicleName} onChange={e => setVehicleName(e.target.value)} required />
-          </label>
+        {/* <form onSubmit={submitHandler}>
 
-          <label className='grid-item name'>Speed <br />
-              <input type="text" placeholder='Test Scenario' value={speed} onChange={e => setSpeed(e.target.value)} required />
-          </label>
+          <div className="grid-container add-vehicle-form">
 
-          <label className='grid-item name'>Position X <br />
-              <input type="text" placeholder='Test Scenario' value={positionX} onChange={e => setPositionX(e.target.value)} required />
-          </label>
+            <label className='grid-item name'>Scenario <br />
+              <ScenarioDropdown scenarios={scenarios} setScenario = {setScenario} scenario={scenario} />
+            </label>
+            
+            <label className='grid-item name'>Vehicle Name <br />
+                <input type="text" placeholder='Test Scenario' value={vehicleName} onChange={e => setVehicleName(e.target.value)} required />
+            </label>
 
-          <label className='grid-item name'>Position Y <br />
-              <input type="text" placeholder='Test Scenario' value={positionY} onChange={e => setPositionY(e.target.value)} required />
-          </label>
+            <label className='grid-item name'>Speed <br />
+                <input type="text" placeholder='Test Scenario' value={speed} onChange={e => setSpeed(e.target.value)} required />
+            </label>
 
-          <label className='grid-item name'>Direction <br />
-            <select value={direction} onChange={e => setDirection(e.target.value)}>
-              <option value="" disabled defaultValue hidden>Select a direction</option>
+            <label className='grid-item name'>Position X <br />
+                <input type="text" placeholder='Test Scenario' value={positionX} onChange={e => setPositionX(e.target.value)} required />
+            </label>
+
+            <label className='grid-item name'>Position Y <br />
+                <input type="text" placeholder='Test Scenario' value={positionY} onChange={e => setPositionY(e.target.value)} required />
+            </label>
+
+            <label className='grid-item name'>Direction <br />
+              <select value={direction} onChange={e => setDirection(e.target.value)}>
+                <option value="" disabled defaultValue hidden>Select a direction</option>
+                  {directions.map((option) => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+              </select>
+            </label>
+
+          </div>
+        </form> */}
+
+        <Form onSubmit={handleSubmit(onSubmit)} className='scenario'>
+
+          {/* alerting of errors */}
+          {!isValid && isSubmitted && <p className="error">Please fill out all the fields</p>}
+
+          <Form.Field>
+
+              <label>Scenario</label>
+              <select 
+                {...register("scenario", { 
+                  required: true, 
+                  pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                })}
+              >
+                <option value="" disabled defaultValue='Select a Scenario' hidden>Select a Scenario</option>
+                  {scenarios.map((option) => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                  ))}
+              </select>
+
+          </Form.Field>
+
+          <Form.Field>
+              <label>Vehicle Name</label>
+              <input 
+                placeholder='Vehicle Name' 
+                type="text" 
+                {...register("vehicleName", { 
+                  required: true, 
+                  pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                })}
+              />
+          </Form.Field>
+          {errors.vehicleName && dirtyFields.vehicleName && <p className="error">Name cannot have any special character excep "_"</p>}
+
+          <Form.Field>
+            <label>Position X</label>
+            <input 
+              placeholder='Position X'
+              type="number" 
+              {...register('positionX', {
+                required: true,
+                pattern: /^([1-9]|[1-9][0-9]{1,2}|1[0-3][0-9]{2}|1400)$/ 
+              })}
+            />
+          </Form.Field>
+          {errors.positionX && dirtyFields.positionX && <p className="error">Value must be in the range 1 and 1400</p>}
+
+          <Form.Field>
+            <label>Position Y</label>
+            <input 
+              placeholder='Position Y'
+              type="number" 
+              {...register('positionY', {
+                required: true,
+                pattern: /^(1[0-9]|[2-9][0-9]|[1-5][0-9]{2}|6[0-8][0-9]|690)$/ 
+              })}
+            />
+          </Form.Field>
+          {errors.positionY && dirtyFields.positionY && <p className="error">Value must be in the range 10 and 690</p>}
+
+          <Form.Field>
+            <label>Direction</label>
+            <select 
+              {...register('direction', {
+                required: true,
+              })} 
+            >
+              <option value="" disabled defaultValue='Select a direction' hidden>Select a direction</option>
                 {directions.map((option) => (
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
             </select>
-          </label>
+          </Form.Field>
 
-        </div>
+          <Form.Field>
+            <label>Speed</label>
+            <input 
+              placeholder='Speed'
+              type="number" 
+              {...register('speed', {
+                required: true,
+                pattern: /^([1-9]|1[0-9]|20)$/ 
+              })}
+            />
+          </Form.Field>
+          {errors.speed && dirtyFields.speed && <p className="error">Value must be in the range 1 and 20</p>}
 
-        <button className='button green-btn' type='submit'>Add</button>
-        <button className='button orange-btn' onClick={resetHandler}>Reset</button>
-      </form>
-    </div>
-  )
+          <motion.button className='button blue-btn' type='submit' whileTap={{scale : 0.9}}>Add</motion.button>
+          <motion.button className='button orange-btn' onClick={resetHandler} whileTap={{scale : 0.9}}>Reset</motion.button>
+          
+        </Form>
+
+      </div>
+    )
 }
 
 export default AddVehiclesForm

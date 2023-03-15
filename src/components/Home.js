@@ -1,24 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import VehicleItem from "./VehicleItem";
-import ScenarioDropdown from "./ScenarioDropdown";
+import Car from "./Car";
+import { motion } from "framer-motion/dist/framer-motion";
+import { ImEnlarge } from "react-icons/im";
+import { TbArrowsMinimize } from "react-icons/tb";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import './homeStyles.css';
 
 function Home() {
   const [scenarios, setScenarios] = useState([]);
   const [scenario, setScenario] = useState("");
   const [vehicles, setVehicles] = useState([]);
+  const [simulate, setSimulate] = useState(false);
+
   const appUrl = process.env.REACT_APP_APP_URL;
   const [isRefresh, setIsRefresh] = useState(false);
   const [refreshRequireVehicles, setRefreshRequireVehicles] = useState(false);
   const [requiredVehicles, setRequiredVehicles] = useState([]);
 
+  const controllerBtnRef = useRef();
+  const carGridRef = useRef();
+
+  useEffect(() => {
+    setSimulate(false);
+  }, [isRefresh, scenario]);
+
   useEffect(() => {
     axios.get(`${appUrl}/scenarios`).then((response) => {
       setScenarios(response.data);
     });
-  }, [isRefresh]);
 
-  useEffect(() => {
     axios.get(`${appUrl}/vehicles`).then((response) => {
       setVehicles(response.data);
       setRefreshRequireVehicles(!refreshRequireVehicles);
@@ -27,7 +39,7 @@ function Home() {
 
    
   useEffect(() => {
-    if(vehicles != undefined && vehicles.length > 0 && scenario !== "") {
+    if(vehicles !== undefined && vehicles.length > 0 && scenario !== "") {
       const filteredVehicles = vehicles.filter(item => {
         return item.scenarioId.toString().includes(scenario)
       })
@@ -35,15 +47,22 @@ function Home() {
     }
 
   }, [scenario, refreshRequireVehicles]);
+
+  const handleFullScreen = useFullScreenHandle();
   
   return (
     <div className='home'>
-      <h1 style={{color: 'white'}}>Welcome to Scenario and Vehicle Application</h1>
-      <ScenarioDropdown scenario = {scenario} scenarios={scenarios} setScenario={setScenario} />
+      <select value={scenario} onChange={e => {setScenario(e.target.value);}}>
+        <option value="" disabled defaultValue='Select a Scenario' hidden>Select a Scenario</option>
+          {scenarios.map((option) => (
+            <option key={option.id} value={option.id}>{option.name}</option>
+          ))}
+      </select>
+
       { scenario !== '' &&
         (
           (requiredVehicles.length) === 0 ? 
-          (<h2 className="info">No data available</h2>)
+          (<h2 className="info">This scenario has no vehicles</h2>)
           :
           (
             <table className="vehicles">
@@ -75,6 +94,62 @@ function Home() {
           )
         )
       }
+
+      {
+        requiredVehicles.length > 0 && 
+        <div className="enlargePointer">
+          <div class="scroll-more">click to enlarge the screen → </div>
+        </div>
+      }
+
+      <FullScreen handle={handleFullScreen}>
+        {
+          requiredVehicles.length > 0 &&
+          <div className="controllerBtns" ref={controllerBtnRef}>
+            <motion.button 
+              className="button blue-btn" 
+              onClick={() => setSimulate(true)} 
+              whileTap={{scale : 0.9}}
+            >
+              Start Simulation
+            </motion.button>
+            <motion.button 
+              className="button orange-btn" 
+              onClick={() => setSimulate(false)} 
+              whileTap={{scale : 0.9}}
+            >
+              Stop Simulation
+            </motion.button>
+          </div>
+        }
+
+        <span
+          color='white' 
+          className="enlargeBtn"
+          style={{
+            display: requiredVehicles.length === 0 && 'none',
+            top: handleFullScreen.active ? '10px' : '67px'
+          }}
+        >
+          {
+            !handleFullScreen.active ? 
+              <ImEnlarge fontSize={20} onClick={handleFullScreen.enter} /> : 
+              <TbArrowsMinimize fontSize={30} onClick={handleFullScreen.exit} />
+          }
+          
+        </span>
+        <div className="carGrid" ref={carGridRef} style={{width: handleFullScreen.active ? '93.9%' : '94.9%'}} >
+          {
+            requiredVehicles.length > 0 &&
+            requiredVehicles.map(sc => {
+              return (
+                <Car key={sc.id} id={sc.id} posX={parseInt(sc.positionX)} posY={parseInt(sc.positionY)} direction={sc.direction} speed={parseInt(sc.speed)} simulate={simulate} />
+              )
+            })
+          }
+        </div>
+      </FullScreen>
+      
     </div>
   );
 }

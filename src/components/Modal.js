@@ -1,4 +1,4 @@
-import React, { ReactDom} from 'react';
+import React from 'react';
 import './modalStyle.css';
 import './addVehicles.css';
 
@@ -12,7 +12,7 @@ function Modal(props) {
                 </div>
                 <div className="modal-body">{props.children}</div>
                 <div className="modal-footer">
-                    <button className='button green-btn' onClick={props.handleSave}>Save</button>
+                    <button className='button blue-btn' onClick={props.handleSave}>Save</button>
                     <button onClick={props.onClose} className="button red-btn">
                         Close
                     </button>

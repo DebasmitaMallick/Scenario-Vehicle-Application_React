@@ -30,7 +30,7 @@ function VehicleItem(props) {
                 speed: speed,
                 direction: direction
             }).then(() => {
-                toast.success('Updated Successfully', {position: toast.POSITION.TOP_CENTER, autoClose: 3000});
+                toast.success('Updated Successfully', {position: toast.POSITION.TOP_CENTER, autoClose: 1000});
                 setNamePrev(name);
                 setPositionXPrev(positionX);
                 setPositionYPrev(positionY);

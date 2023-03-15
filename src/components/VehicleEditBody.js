@@ -3,20 +3,20 @@ import React from 'react'
 function VehicleEditBody(props) {
     const directions = [
         {
-          label: "Towards",
-          value: "Towards",
+          label: "towards",
+          value: "towards",
         },
         {
-          label: "Backwards",
-          value: "Backwards",
+          label: "backwards",
+          value: "backwards",
         },
         {
-          label: "Upwards",
-          value: "Upwards",
+          label: "upwards",
+          value: "upwards",
         },
         {
-          label: "Downwards",
-          value: "Downwards",
+          label: "downwards",
+          value: "downwards",
         },
       ];
 

@@ -25,7 +25,7 @@ function Navbar() {
   return (
     <>
       <div className="topnav" id="myTopnav" ref={ref}>
-        <span id='brand'><FaCar fontSize={33} /></span>
+        <span id='brand'><FaCar  /></span>
         <Link id='home' onClick={handleClick} className={`${activePage === 'home' && 'active'}`} to="/">Home</Link>
         <Link id='addscenario' onClick={handleClick} className={`${activePage === 'addscenario' && 'active'}`} to="/addscenario">Add Scenarios</Link>
         <Link id='allscenarios' onClick={handleClick} className={`${activePage === 'allscenarios' && 'active'}`} to="/allscenarios">All Scenarios</Link>

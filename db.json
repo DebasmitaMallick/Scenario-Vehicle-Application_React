@@ -22,35 +22,78 @@
       "name": "A",
       "time": "2",
       "vehicles": []
+    },
+    {
+      "id": 891,
+      "name": "Forest",
+      "time": "5",
+      "vehicles": [
+        143,
+        402,
+        292
+      ]
+    },
+    {
+      "id": 266,
+      "name": "ValidRange",
+      "time": "4",
+      "vehicles": []
     }
   ],
   "vehicles": [
     {
-      "id": 124,
+      "id": 1,
       "name": "test1",
-      "speed": "4",
-      "positionX": "6",
-      "positionY": "8",
-      "direction": "upwards",
-      "scenarioId": 205
-    },
-    {
-      "id": 104,
-      "name": "testx",
-      "speed": "4",
+      "speed": "3",
       "positionX": "60",
-      "positionY": "8",
+      "positionY": "200",
       "direction": "downwards",
       "scenarioId": 205
     },
     {
-      "id": 224,
+      "id": 2,
+      "name": "testx",
+      "speed": "1",
+      "positionX": "1400",
+      "positionY": "1",
+      "direction": "backwards",
+      "scenarioId": 205
+    },
+    {
+      "id": 3,
       "name": "test",
-      "speed": "4",
-      "positionX": "6",
-      "positionY": "8",
+      "speed": "20",
+      "positionX": "1",
+      "positionY": "690",
       "direction": "upwards",
       "scenarioId": 509
+    },
+    {
+      "id": 143,
+      "name": "F1",
+      "speed": "10",
+      "positionX": "500",
+      "positionY": "4",
+      "direction": "downwards",
+      "scenarioId": "891"
+    },
+    {
+      "id": 402,
+      "name": "5A7",
+      "speed": "17",
+      "positionX": "1400",
+      "positionY": "34",
+      "direction": "backwards",
+      "scenarioId": "891"
+    },
+    {
+      "id": 292,
+      "name": "F5TU",
+      "speed": "20",
+      "positionX": "200",
+      "positionY": "700",
+      "direction": "upwards",
+      "scenarioId": "891"
     }
   ]
 }

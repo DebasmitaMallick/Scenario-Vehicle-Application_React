@@ -1,3 +1,5 @@
+@import-normalize; /* bring in normalize.css styles */
+
 :root {
   --green : #4CAF50; 
   --orange : #ffa500;
@@ -8,8 +10,10 @@
   --grey : #b3b3b3;
   --black : #000000;
   --red : #e90303;
+  --errorRed : #eb5656;
   --yellow : #ffa500;
   --blue : #4f99ff;
+  --darkBlue : #1e54a0;
 
   --brown : #967E76;
   --lightBrown : #D7C0AE;
@@ -38,15 +42,20 @@ input, select, option {
 
 .button {
   border: none;
-  border-radius: 5px;
-  color: var(--white);
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 2px;
+    border-radius: 5px;
+    color: var(--white);
+    padding: 12px 29px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.error {
+  color: var(--errorRed);
+  text-align: initial !important;
 }
 
 .green-btn {
@@ -55,6 +64,10 @@ input, select, option {
 
 .orange-btn {
   background: var(--orange);
+}
+
+.green-btn:hover, .blue-btn:hover {
+  color: var(--white) !important;
 }
 
 .red-btn {
@@ -129,12 +142,13 @@ a {
 /* Navbar STARTS---------------- */
 
 .topnav {
-  overflow: hidden;
+  /* height: 3.6rem; */
+  /* overflow: hidden; */
   background-color: #0077b6;
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1
+  z-index: 2
 }
 
 .topnav a, #brand {
@@ -145,7 +159,7 @@ a {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-  height: 29px;
+  /* height: 100%; */
 }
 
 .topnav a:hover {
@@ -169,6 +183,8 @@ a {
 }
 
 @media screen and (max-width: 600px) {
+
+  /* .topnav.responsive {position: relative;} */
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -185,6 +201,7 @@ a {
     display: block;
     text-align: left;
   }
+
   #home {
     margin-top: 50px;
   }
@@ -195,35 +212,7 @@ a {
 
 /* HOME STARTS---------------- */
 
-.home {
-  margin-top: 3.5rem;
-  height: 313px;
-  background-image: url('https://i.pinimg.com/736x/eb/18/f6/eb18f63d4536bb44e99e6c74535b80b5.jpg');
-}
 
-.home h1 {
-  padding: 4rem 0;
-}
-
-.home select, .home option {
-  font-size: 20px;
-  width: 13.7rem;
-  padding: 12px 20px;
-  display: inline-block;
-  border: 1px solid #b3b3b3;
-  border-radius: 4px;
-  box-sizing: border-box;
-  background: var(--darkgrey);
-  color: var(--white);
-}
-
-.home .vehicles {
-   margin-top: 55px;
-}
-
-.home .info {
-  margin-top: 70px;
-}
 
 /* ----------------HOME ENDS */
 
@@ -231,16 +220,17 @@ a {
 /* ADD_SCENARIO STARTS---------------- */
 
 .scenario {
-  color: white;
-  display: flex;
-  padding: 63px 0;
+  width: 35rem;
   background: var(--dark);
-  box-sizing: border-box;
-  width: 41rem;
+  padding: 4rem 5rem;
   margin: auto;
   border-radius: 12px;
-  margin-bottom: 10px;
   box-shadow: 9px 16px 29px 2px rgba(0,0,0,0.58);
+}
+
+.scenario label {
+  color: var(--white) !important;
+  scale: 1.2;
 }
 
 .name, .time {
@@ -258,7 +248,8 @@ a {
 /* ALL_SCENARIO STARTS---------------- */
 
 #all-scenarios {
-  margin: 0 5rem;
+  margin: 0 3rem 5rem;
+  box-shadow: 9px 16px 29px 2px rgba(0,0,0,0.58);
 }
 
 .all-scenario-header {
@@ -267,6 +258,21 @@ a {
 
 /* ----------------ALL_SCENARIO ENDS */
 
+/* BACKDROP STARTS---------------- */
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #000000e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ----------------BACKDROP ENDS */
 
 
 
@@ -302,11 +308,12 @@ a {
     margin: 0;
   }
 
-  .scenario {
-    width: 100%;
-  }
-
   .all-scenario-header .grid-item h2 {
     font-size: 21px !important;
   }
+
+  /* .controllerBtns button {
+    font-size: 14px;
+    padding: 6px 12px;
+  } */
 }

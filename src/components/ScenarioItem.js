@@ -47,13 +47,13 @@ function ScenarioItem(props) {
     }
 
     const editScenario = () => {
-        if(name != prevName || time != prevTime) {
+        if(name !== prevName || time !== prevTime) {
             axios
             .patch(`${appUrl}/scenarios/${props.scenario.id}`, {
                 name: name,
                 time: time
             }).then(() => {
-                toast.success('Updated Successfully', {position: toast.POSITION.TOP_CENTER, autoClose: 3000});
+                toast.success('Updated Successfully', {position: toast.POSITION.TOP_CENTER, autoClose: 1000});
                 setPrevName(name);
                 setPrevTime(time);
             });

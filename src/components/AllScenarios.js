@@ -54,48 +54,48 @@ function AllScenarios() {
     );
   };
 
-  if(scenarios.length === 0) {
+  if(scenarios.length > 0) {
     return (
       <div className="main-container">
-        <ScenarioItemBtn cls = {'isInvisible'} delete = {null} clsTxt = {'isInvisible'} />
-        <h1 className="info">No data Available</h1>
+        <ScenarioItemBtn cls = {'button orange-btn'} delete = {confirmDelete} clsTxt = {''} />
+  
+        <div id="all-scenarios">
+          <table id="scenarios">
+            <thead>
+              <tr>
+                <th>Scenario id</th>
+                <th>Scenario Name</th>
+                <th>Scenario Time</th>
+                <th>Number of Vehicles</th>
+                <th>Add Vehicles</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scenarios.map((sc) => {
+                return (
+                  <ScenarioItem
+                    key={sc.id}
+                    scenario={sc}
+                    refresh={setIsRefresh}
+                    isRefresh = {isRefresh}
+                  />
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="main-container">
-      <ScenarioItemBtn cls = {'button orange-btn'} delete = {confirmDelete} clsTxt = {''} />
-
-      <div id="all-scenarios">
-        <table id="scenarios">
-          <thead>
-            <tr>
-              <th>Scenario id</th>
-              <th>Scenario Name</th>
-              <th>Scenario Time</th>
-              <th>Number of Vehicles</th>
-              <th>Add Vehicles</th>
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {scenarios.map((sc) => {
-              return (
-                <ScenarioItem
-                  key={sc.id}
-                  scenario={sc}
-                  refresh={setIsRefresh}
-                  isRefresh = {isRefresh}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <ScenarioItemBtn cls = {'isInvisible'} delete = {null} clsTxt = {'isInvisible'} />
+      <h1 className="info">No data Available</h1>
     </div>
-  );
+  )
 }
 
 export default AllScenarios;

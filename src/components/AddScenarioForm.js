@@ -1,69 +1,93 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion/dist/framer-motion";
+import { Form } from 'semantic-ui-react';
+import { useForm } from "react-hook-form";
 
 function AddScenarioForm() {
-  const [scenarioName, setScenarioName] = useState("");
-  const [scenarioTime, setScenarioTime] = useState("");
   const appUrl = process.env.REACT_APP_APP_URL;
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const { 
+    register, handleSubmit, resetField, formState: { errors, dirtyFields, isValid, isSubmitted, isSubmitSuccessful } 
+  } = useForm(
+    { defaultValues: { scenarioName: "", scenarioTime: null } }
+  );
 
+  const onSubmit = (data) => {
+    console.log(data);
     axios
       .post(`${appUrl}/scenarios`, {
         id: Math.floor(Math.random() * 1000),
-        name: scenarioName,
-        time: scenarioTime,
+        name: data.scenarioName,
+        time: data.scenarioTime,
         vehicles: [],
       })
       .then(() => {
         toast.success("Added Successfully", {
           position: toast.POSITION.TOP_CENTER,
-          autoClose: 3000,
+          autoClose: 1000,
         });
         resetHandler();
       });
-  };
+  }
 
   const resetHandler = (e) => {
-    setScenarioName("");
-    setScenarioTime("");
+    resetField('scenarioName');
+    resetField('scenarioTime');
   };
 
   return (
     <div className="addScenarioContainer">
       <h1 className="info">Add Scenario</h1>
-      <form onSubmit={submitHandler}>
-        <div className="scenario">
-          <label className="name">
-            Scenario Name <br />
-            <input
-              type="text"
-              placeholder="Test Scenario"
-              required
-              value={scenarioName}
-              onChange={(e) => setScenarioName(e.target.value)}
-            />
-          </label>
 
-          <label className="time">
-            Scenario Time (seconds) <br />
-            <input
-              type="number"
-              required
-              value={scenarioTime}
-              onChange={(e) => setScenarioTime(e.target.value)}
-            />
-          </label>
-        </div>
-        <button className="button green-btn" type="submit">
-          Add
-        </button>
-        <button className="button orange-btn" onClick={resetHandler}>
-          Reset
-        </button>
-      </form>
+      <Form onSubmit={handleSubmit(onSubmit)} className='scenario'>
+
+          {/* alerting of errors */}
+          {!isValid && isSubmitted && !isSubmitSuccessful && <p className="error">Please fill out all the fields</p>}
+
+          <Form.Field>
+              <label>Scenario Name</label>
+              <input 
+                placeholder='Scenario Name' 
+                type="text" 
+                {...register("scenarioName", { 
+                  required: true,
+                  pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                })}
+              />
+          </Form.Field>
+          {errors.scenarioName && dirtyFields.scenarioName && <p className="error">Name cannot have any special character excep "_"</p>}
+          <Form.Field>
+              <label>Scenario Time</label>
+              <input 
+                placeholder='Scenario Time' 
+                type="number" 
+                {...register("scenarioTime", { 
+                  required: true, 
+                  pattern: /^[0-5]$/
+                })}
+              />
+          </Form.Field>
+          {errors.scenarioTime && dirtyFields.scenarioTime && <p className="error">Value must be in the range 1 and 5</p>}
+
+          <motion.button 
+            className="button blue-btn" 
+            type="submit"
+            whileTap={{scale : 0.9}}
+          >
+            Add
+          </motion.button>
+
+          <motion.button 
+            className="button orange-btn" 
+            onClick={resetHandler}
+            whileTap={{scale : 0.9}}
+          >
+            Reset
+          </motion.button>
+      </Form>
+
     </div>
   );
 }
