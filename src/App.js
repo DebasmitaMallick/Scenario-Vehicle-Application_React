@@ -13,7 +13,6 @@ import {
   Route
 } from "react-router-dom";
 import Navbar from './components/Navbar';
-import PlayMotion from './components/PlayMotion';
 toast.configure();
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
             <Route path='/allscenarios' element={<AllScenarios/>} />
             <Route path='/addvehiclesform' element={<AddVehiclesForm/>} />
             <Route path='/' element={<Home/>} />
-            <Route path='/motion' element={<PlayMotion/>} />
           </Routes>
         </div>
       </Router>

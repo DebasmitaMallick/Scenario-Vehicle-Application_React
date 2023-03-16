@@ -2,19 +2,18 @@
     height: 78rem;
     position: relative;
     margin-top: 3.5rem;
-    /* height: 249px; */
     background: var(--black);
     padding-top: 1rem;
-    /* background-image: url('https://drive.google.com/uc?export=view&id=1F2fPNNonEmj1ohhOGIOW2Xzk1xMkdoFh'); */
   }
   
   .home .info {
     color: var(--white);
   }
-  
-  /* .home h1 {
-    padding-top: 2rem;
-  } */
+
+
+  .home select {
+    width: 13.4rem !important;
+  }
   
   .home select, .home option {
     font-size: 16px;
@@ -38,91 +37,30 @@
   }
   
   .carGrid {
+    background: conic-gradient(from 90deg at 1px 1px,#0000 90deg,#4735c6 0) 
+    0 0/60px 60px;;
     position: relative;
-    /* width: 93.9%; */
     margin: 3rem auto;
-    /* background: var(--black); */
     height: 51.5rem;
-    background-size: 60px 60px;
-    background-image: 
-      repeating-linear-gradient(#4735c6 0 1px, transparent 1px 100%), 
-      repeating-linear-gradient(90deg, #3f69a3 0 1px, transparent 1px 100%);
   }
-  
+
   .controllerBtns {
-    z-index: 1;
+    top: -34px;
     position: absolute;
-    left: 40px;
-    top: 0;
+    left: 50%;
   }
   
   .enlargeBtn {
+    position: absolute;
     color: white;
-      position: fixed;
-      right: 42px;
-      /* top: 67px; */
-      opacity: 0.7;
-      cursor: grab;
-      z-index: 1;
+    right: 7px;
+    top: -28px;
+    opacity: 0.7;
+    cursor: grab;
   }
   
   .enlargeBtn:hover {
     opacity: 1;
   }
   
-  .scroll-more {
-    display: block;
-    color: white;
-    text-align: center;
-    width: 450px;
-    position: absolute;
-    bottom: 8rem;
-    left: calc(50% - 225px);
-    margin: 0 auto;
-    font-size: 1.3rem;
-    opacity: 1;
-    transition: opacity .3s ease;
-    font-family: monospace;
-    pointer-events: none;
-    z-index: -1;
-    transform-origin: center;
-    -webkit-animation: bounce 3s cubic-bezier(.37,0,.21,1.02) infinite,fonts 5s linear infinite;
-    animation: bounce 3s cubic-bezier(.37,0,.21,1.02) infinite,fonts 5s linear infinite;
-  }
   
-  .enlargePointer {
-    z-index: 3;
-    position: fixed;
-    right: 199px;
-    top: -5px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    font-size: 5px;
-    line-height: 80%;
-    transform: rotateX(0) rotateY(-25deg);
-    text-transform: uppercase;
-    width: fit-content;
-    text-align: center;
-    color: #b9dfff;
-    color: #fff;
-    font-family: "Zefani";
-    font-family: 'Abril Fatface';
-    margin: 3rem auto;
-    padding: 2rem 0 9rem;
-    text-shadow: 0 0 5px #fff,0 0 10px #fff,0 0 15px #fff,0 0 20px #228dff,0 0 35px #228dff,0 0 40px #228dff;
-  }
-  
-  @keyframes bounce {
-    0%,20%,50%,80%,to {
-        transform: translateZ(-2px) translateY(5px)
-    }
-  
-    40% {
-        transform: rotateY(180deg) translateZ(-2px) translateY(-35px)
-    }
-  
-    60% {
-        transform: translateZ(-2px) translateY(-25px)
-    }
-  };

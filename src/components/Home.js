@@ -6,6 +6,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import { ImEnlarge } from "react-icons/im";
 import { TbArrowsMinimize } from "react-icons/tb";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { BsPlayCircle, BsPauseCircle } from "react-icons/bs";
 import './homeStyles.css';
 
 function Home() {
@@ -95,50 +96,40 @@ function Home() {
         )
       }
 
-      {
-        requiredVehicles.length > 0 && 
-        <div className="enlargePointer">
-          <div class="scroll-more">click to enlarge the screen → </div>
-        </div>
-      }
-
       <FullScreen handle={handleFullScreen}>
-        {
-          requiredVehicles.length > 0 &&
-          <div className="controllerBtns" ref={controllerBtnRef}>
-            <motion.button 
-              className="button blue-btn" 
-              onClick={() => setSimulate(true)} 
-              whileTap={{scale : 0.9}}
-            >
-              Start Simulation
-            </motion.button>
-            <motion.button 
-              className="button orange-btn" 
-              onClick={() => setSimulate(false)} 
-              whileTap={{scale : 0.9}}
-            >
-              Stop Simulation
-            </motion.button>
-          </div>
-        }
-
-        <span
-          color='white' 
-          className="enlargeBtn"
-          style={{
-            display: requiredVehicles.length === 0 && 'none',
-            top: handleFullScreen.active ? '10px' : '67px'
-          }}
-        >
-          {
-            !handleFullScreen.active ? 
-              <ImEnlarge fontSize={20} onClick={handleFullScreen.enter} /> : 
-              <TbArrowsMinimize fontSize={30} onClick={handleFullScreen.exit} />
-          }
-          
-        </span>
         <div className="carGrid" ref={carGridRef} style={{width: handleFullScreen.active ? '93.9%' : '94.9%'}} >
+
+          {
+            requiredVehicles.length > 0 && 
+            (
+              <>
+                <div className="controllerBtns" ref={controllerBtnRef} >
+                  <motion.div 
+                    onClick={() => setSimulate(!simulate)} 
+                    whileHover={{scale : 1.3}}
+                  >
+                    {
+                      !simulate ? 
+                        <BsPlayCircle fontSize={30} color={'#39FF14'} cursor={'pointer'} />
+                        :
+                        <BsPauseCircle fontSize={30} color={'#FF6700'} cursor={'pointer'} />
+                    }
+                  </motion.div>
+                </div>
+
+                <span
+                  className="enlargeBtn"
+                >
+                  {
+                    !handleFullScreen.active ? 
+                      <ImEnlarge fontSize={20} onClick={handleFullScreen.enter} /> : 
+                      <TbArrowsMinimize fontSize={30} onClick={handleFullScreen.exit} />
+                  }
+                  
+                </span>
+              </>
+            )
+          }
           {
             requiredVehicles.length > 0 &&
             requiredVehicles.map(sc => {

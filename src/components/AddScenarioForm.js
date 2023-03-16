@@ -18,7 +18,7 @@ function AddScenarioForm() {
     console.log(data);
     axios
       .post(`${appUrl}/scenarios`, {
-        id: Math.floor(Math.random() * 1000),
+        id: (Math.floor(Math.random() * 1000)).toString(),
         name: data.scenarioName,
         time: data.scenarioTime,
         vehicles: [],

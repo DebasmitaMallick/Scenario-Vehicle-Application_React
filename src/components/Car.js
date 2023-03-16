@@ -93,7 +93,7 @@ const Car = ({id, posX, posY, direction, speed, simulate}) => {
           initial={false} //to disable enter animation
           exit={false}
         >
-          <div class="sign">
+          <div className="sign">
             <span>{id}</span>
           </div>
         </motion.div>

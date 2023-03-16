@@ -1,99 +1,78 @@
 {
   "scenarios": [
     {
-      "id": 205,
-      "name": "SC1",
-      "time": "3",
+      "id": "560",
+      "name": "Hill",
+      "time": "5",
       "vehicles": [
-        124,
-        104
+        "544"
       ]
     },
     {
-      "id": 509,
-      "name": "SC2",
+      "id": "737",
+      "name": "Forest",
       "time": "3",
       "vehicles": [
-        224
+        "757",
+        "373",
+        "756"
       ]
     },
     {
-      "id": 667,
-      "name": "A",
+      "id": "493",
+      "name": "Lake",
       "time": "2",
       "vehicles": []
     },
     {
-      "id": 891,
-      "name": "Forest",
+      "id": "216",
+      "name": "City",
       "time": "5",
-      "vehicles": [
-        143,
-        402,
-        292
-      ]
+      "vehicles": []
     },
     {
-      "id": 266,
-      "name": "ValidRange",
+      "id": "629",
+      "name": "Test",
       "time": "4",
       "vehicles": []
     }
   ],
   "vehicles": [
     {
-      "id": 1,
-      "name": "test1",
-      "speed": "3",
-      "positionX": "60",
-      "positionY": "200",
-      "direction": "downwards",
-      "scenarioId": 205
-    },
-    {
-      "id": 2,
-      "name": "testx",
-      "speed": "1",
-      "positionX": "1400",
-      "positionY": "1",
+      "id": "757",
+      "name": "F1",
+      "speed": "15",
+      "positionX": "500",
+      "positionY": "10",
       "direction": "backwards",
-      "scenarioId": 205
+      "scenarioId": "737"
     },
     {
-      "id": 3,
-      "name": "test",
-      "speed": "20",
-      "positionX": "1",
+      "id": "373",
+      "name": "F2",
+      "speed": "12",
+      "positionX": "10",
+      "positionY": "10",
+      "direction": "towards",
+      "scenarioId": "737"
+    },
+    {
+      "id": "544",
+      "name": "H1",
+      "speed": "11",
+      "positionX": "500",
       "positionY": "690",
       "direction": "upwards",
-      "scenarioId": 509
+      "scenarioId": "560"
     },
     {
-      "id": 143,
-      "name": "F1",
-      "speed": "10",
-      "positionX": "500",
-      "positionY": "4",
+      "id": "756",
+      "name": "Odd",
+      "speed": "8",
+      "positionX": "6",
+      "positionY": "89",
       "direction": "downwards",
-      "scenarioId": "891"
-    },
-    {
-      "id": 402,
-      "name": "5A7",
-      "speed": "17",
-      "positionX": "1400",
-      "positionY": "34",
-      "direction": "backwards",
-      "scenarioId": "891"
-    },
-    {
-      "id": 292,
-      "name": "F5TU",
-      "speed": "20",
-      "positionX": "200",
-      "positionY": "700",
-      "direction": "upwards",
-      "scenarioId": "891"
+      "scenarioId": "737"
     }
   ]
 }

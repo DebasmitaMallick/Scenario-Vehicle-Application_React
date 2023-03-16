@@ -4,7 +4,6 @@
   --green : #4CAF50; 
   --orange : #ffa500;
   --white : #ffffff;
-  /* --dark : #4f4f51; */
   --dark : #413F42;
   --darkgrey : #2c2b2b;
   --grey : #b3b3b3;
@@ -21,9 +20,6 @@
   --lightBlue : #B7C4CF;
 }
 
-/* body {
-  background: var(--black);
-} */
 .App {
   text-align: center;
 }
@@ -142,13 +138,15 @@ a {
 /* Navbar STARTS---------------- */
 
 .topnav {
-  /* height: 3.6rem; */
-  /* overflow: hidden; */
   background-color: #0077b6;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 2
+}
+
+#brand {
+  scale: 1.8;
 }
 
 .topnav a, #brand {
@@ -159,7 +157,6 @@ a {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-  /* height: 100%; */
 }
 
 .topnav a:hover {
@@ -183,8 +180,6 @@ a {
 }
 
 @media screen and (max-width: 600px) {
-
-  /* .topnav.responsive {position: relative;} */
   .topnav a:not(:first-child) {
     display: none;
   }
@@ -208,13 +203,6 @@ a {
 }
 
 /* ----------------NAVBAR ENDS */
-
-
-/* HOME STARTS---------------- */
-
-
-
-/* ----------------HOME ENDS */
 
 
 /* ADD_SCENARIO STARTS---------------- */
@@ -312,8 +300,71 @@ a {
     font-size: 21px !important;
   }
 
-  /* .controllerBtns button {
-    font-size: 14px;
-    padding: 6px 12px;
-  } */
 }
+
+
+
+
+/* MODAL start -------------------*/
+
+.modal {
+  z-index: 1;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal.enter-done {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal.exit {
+  opacity: 0;
+}
+
+.modal-content {
+  width: 500px;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+  transform: translateY(-200px);
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.modal.exit .modal-content {
+  transform: translateY(-200px);
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px;
+}
+
+.modal-title {
+  margin: 0;
+}
+
+.modal-body {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/*--------------- MODAL ends*/

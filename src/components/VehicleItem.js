@@ -3,16 +3,10 @@ import React, { useState } from 'react'
 import { FaPencilAlt, FaTrash } from 'react-icons/fa'
 import { toast } from 'react-toastify';
 import DeleteAlert from './DeleteAlert';
-import Modal from './Modal';
 import VehicleEditBody from './VehicleEditBody';
 
 function VehicleItem(props) {
     const [showEditModal, setShowEditModal] = useState(false);
-    const [name, setName] = useState(props.vehicle.name);
-    const [speed, setSpeed] = useState(props.vehicle.speed);
-    const [positionX, setPositionX] = useState(props.vehicle.positionX);
-    const [positionY, setPositionY] = useState(props.vehicle.positionY);
-    const [direction, setDirection] = useState(props.vehicle.direction);
     const [namePrev, setNamePrev] = useState(props.vehicle.name);
     const [speedPrev, setSpeedPrev] = useState(props.vehicle.speed);
     const [positionXPrev, setPositionXPrev] = useState(props.vehicle.positionX);
@@ -20,22 +14,22 @@ function VehicleItem(props) {
     const [directionPrev, setDirectionPrev] = useState(props.vehicle.direction);
     const appUrl = process.env.REACT_APP_APP_URL;
 
-    const editVehicle = () => {
-        if(name !== namePrev || positionX !== positionXPrev || positionY !== positionYPrev || direction !== directionPrev || speed !== speedPrev) {
+    const editVehicle = (data) => {
+        if(data.vehicleName !== namePrev || data.vPositionX !== positionXPrev || data.vPositionY !== positionYPrev || data.vDirection !== directionPrev || data.vSpeed !== speedPrev) {
             axios
             .patch(`${appUrl}/vehicles/${props.vehicle.id}`, {
-                name: name,
-                positionX: positionX,
-                positionY: positionY,
-                speed: speed,
-                direction: direction
+                name: data.vehicleName,
+                positionX: data.vPositionX,
+                positionY: data.vPositionY,
+                speed: data.vSpeed,
+                direction: data.vDirection
             }).then(() => {
                 toast.success('Updated Successfully', {position: toast.POSITION.TOP_CENTER, autoClose: 1000});
-                setNamePrev(name);
-                setPositionXPrev(positionX);
-                setPositionYPrev(positionY);
-                setSpeedPrev(speed);
-                setDirectionPrev(direction);
+                setNamePrev(data.vehicleName);
+                setPositionXPrev(data.vPositionX);
+                setPositionYPrev(data.vPositionY);
+                setSpeedPrev(data.vSpeed);
+                setDirectionPrev(data.vDirection);
                 props.refresh(!props.isRefresh);
             });
         }
@@ -88,9 +82,7 @@ function VehicleItem(props) {
             <td>{props.vehicle.direction}</td>
             <td className='pointer' onClick={() => setShowEditModal(true)}><FaPencilAlt className='edit-icon' /></td>
             <td className='pointer' onClick={confirmDelete}><FaTrash className='trash-icon' /></td>
-            <Modal title='Edit Vehicle' onClose={() => setShowEditModal(false)} show={showEditModal} handleSave={editVehicle} >
-                <VehicleEditBody name={name} speed={speed} positionX={positionX} positionY={positionY} direction={direction} setName = {setName} setSpeed = {setSpeed} setPositionX={setPositionX} setPositionY={setPositionY} setDirection={setDirection} />
-            </Modal>
+            <VehicleEditBody name={props.vehicle.name} speed={props.vehicle.speed} positionX={props.vehicle.positionX} positionY={props.vehicle.positionY} direction={props.vehicle.direction} onClose={() => setShowEditModal(false)} show={showEditModal} handleSave={editVehicle} />
         </tr>
   )
 }

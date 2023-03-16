@@ -29,46 +29,14 @@ function AddVehiclesForm() {
   const location = useLocation();
   const [scenarios, setScenarios] = useState([]);
   const appUrl = process.env.REACT_APP_APP_URL;
+  const defaultScenarioId = location.state ? location.state.id : '';
 
-    const onSubmit = (data) => {
-      let x = [];
+  console.log(scenarios[0]);
 
-      let vehicleId = Math.floor(Math.random()*1000);
-      axios
-      .post(`${appUrl}/vehicles`, {
-        id: vehicleId,
-        name: data.vehicleName,
-        speed: data.speed,
-        positionX: data.positionX,
-        positionY: data.positionY,
-        direction: data.direction,
-        scenarioId: data.scenario
-      })
-      .then(() => {
-        //update parent scenario
-        axios.get(`${appUrl}/scenarios/${data.scenario}`).then((res) => {
-          x = res.data.vehicles;
-          x.push(vehicleId);
-          const temp = x;
-          axios
-          .patch(`${appUrl}/scenarios/${data.scenario}`, {
-              vehicles : temp
-          }).then(() => {
-            toast.success("Added Successfully", {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 1000,
-            });
-            resetHandler();
-          });
-          });
-      });
-    }
-  
     const { 
       register, handleSubmit, resetField, formState: { errors, dirtyFields, isValid, isSubmitted } 
     } = useForm({
       defaultValues: {
-        scenario : location.state ? location.state.id : '',
         vehicleName : '',
         positionX : null,
         positionY : null,
@@ -83,8 +51,42 @@ function AddVehiclesForm() {
           });
     }, []);
 
+    const onSubmit = (data) => {
+      let x = [];
+
+      let vehicleId = (Math.floor(Math.random()*1000)).toString();
+      axios
+      .post(`${appUrl}/vehicles`, {
+        id: vehicleId,
+        name: data.vehicleName,
+        speed: data.speed,
+        positionX: data.positionX,
+        positionY: data.positionY,
+        direction: data.direction,
+        scenarioId: data.scenarioId
+      })
+      .then(() => {
+        //update parent scenario
+        axios.get(`${appUrl}/scenarios/${data.scenarioId}`).then((res) => {
+          x = res.data.vehicles;
+          x.push(vehicleId);
+          const temp = x;
+          axios
+          .patch(`${appUrl}/scenarios/${data.scenarioId}`, {
+              vehicles : temp
+          }).then(() => {
+            toast.success("Added Successfully", {
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 1000,
+            });
+            resetHandler();
+          });
+          });
+      });
+    }
+
     const resetHandler = () => {
-      resetField('scenario');
+      resetField('scenarioId');
       resetField('vehicleName');
       resetField('positionX');
       resetField('positionY');
@@ -94,61 +96,24 @@ function AddVehiclesForm() {
     return (
       <div className='addVehiclesContainer'>
         <h2>Add Vehicles</h2>
-
-        {/* <form onSubmit={submitHandler}>
-
-          <div className="grid-container add-vehicle-form">
-
-            <label className='grid-item name'>Scenario <br />
-              <ScenarioDropdown scenarios={scenarios} setScenario = {setScenario} scenario={scenario} />
-            </label>
-            
-            <label className='grid-item name'>Vehicle Name <br />
-                <input type="text" placeholder='Test Scenario' value={vehicleName} onChange={e => setVehicleName(e.target.value)} required />
-            </label>
-
-            <label className='grid-item name'>Speed <br />
-                <input type="text" placeholder='Test Scenario' value={speed} onChange={e => setSpeed(e.target.value)} required />
-            </label>
-
-            <label className='grid-item name'>Position X <br />
-                <input type="text" placeholder='Test Scenario' value={positionX} onChange={e => setPositionX(e.target.value)} required />
-            </label>
-
-            <label className='grid-item name'>Position Y <br />
-                <input type="text" placeholder='Test Scenario' value={positionY} onChange={e => setPositionY(e.target.value)} required />
-            </label>
-
-            <label className='grid-item name'>Direction <br />
-              <select value={direction} onChange={e => setDirection(e.target.value)}>
-                <option value="" disabled defaultValue hidden>Select a direction</option>
-                  {directions.map((option) => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
-                  ))}
-              </select>
-            </label>
-
-          </div>
-        </form> */}
-
         <Form onSubmit={handleSubmit(onSubmit)} className='scenario'>
 
-          {/* alerting of errors */}
           {!isValid && isSubmitted && <p className="error">Please fill out all the fields</p>}
 
           <Form.Field>
 
               <label>Scenario</label>
               <select 
-                {...register("scenario", { 
-                  required: true, 
-                  pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                {...register("scenarioId", { 
+                  required: true
                 })}
               >
-                <option value="" disabled defaultValue='Select a Scenario' hidden>Select a Scenario</option>
-                  {scenarios.map((option) => (
-                    <option key={option.id} value={option.id}>{option.name}</option>
-                  ))}
+                  <option value="" selected={defaultScenarioId === '' ? true : false} disabled defaultValue='Select a scenario' hidden>Select a scenario</option>
+                  {
+                    scenarios.map(v => (
+                      <option key={v.id}  value={v.id} selected={v.id === defaultScenarioId ? true : false}>{v.name}</option>
+                    ))
+                  }
               </select>
 
           </Form.Field>

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useActivePage } from '../contexts/ActivePageProvider';
 import DeleteAlert from './DeleteAlert';
-import Modal from './Modal';
 import ScenarioEditBody from './ScenarioEditBody';
 
 function ScenarioItem(props) {
@@ -17,6 +16,8 @@ function ScenarioItem(props) {
     const [prevName, setPrevName] = useState(props.scenario.name);
     const [prevTime, setPrevTime] = useState(props.scenario.time);
     const appUrl = process.env.REACT_APP_APP_URL;
+
+    console.log(props.scenario.id);
 
     const deleteScenario = () => {
         axios.delete(`${appUrl}/scenarios/`+props.scenario.id)
@@ -46,16 +47,18 @@ function ScenarioItem(props) {
         toast.warning(<DeleteAlert delete = {deleteScenario} message = {'Are you sure you want to delete this scenario?'} /> , {position: toast.POSITION.TOP_CENTER, closeButton: false});
     }
 
-    const editScenario = () => {
-        if(name !== prevName || time !== prevTime) {
+    const editScenario = (data) => {
+        setName(data.scenarioName);
+        setTime(data.scenarioTime);
+        if(data.scenarioName !== prevName || data.scenarioTime !== prevTime) {
             axios
             .patch(`${appUrl}/scenarios/${props.scenario.id}`, {
-                name: name,
-                time: time
+                name: data.scenarioName,
+                time: data.scenarioTime
             }).then(() => {
                 toast.success('Updated Successfully', {position: toast.POSITION.TOP_CENTER, autoClose: 1000});
-                setPrevName(name);
-                setPrevTime(time);
+                setPrevName(data.scenarioName);
+                setPrevTime(data.scenarioTime);
             });
         }
     }
@@ -70,9 +73,8 @@ function ScenarioItem(props) {
                 <td><Link onClick={() => setActivePage('addvehiclesform')} to='/addvehiclesform' state={props.scenario}><FaPlusCircle className='add-icon' /></Link></td>
                 <td className='pointer' onClick={() => setShowEditModal(true)}><FaPencilAlt className='edit-icon' /></td>
                 <td className='pointer' onClick={confirmDelete}><FaTrash className='trash-icon' /></td>
-                <Modal title='Edit Scenario' onClose={() => setShowEditModal(false)} show={showEditModal} handleSave={editScenario} >
-                    <ScenarioEditBody name={name} time={time} setName = {setName} setTime = {setTime} />
-                </Modal>
+                <ScenarioEditBody name={name} time={time} onClose={() => setShowEditModal(false)} show={showEditModal} handleSave={editScenario} />
+
             </tr>
         </>
     )

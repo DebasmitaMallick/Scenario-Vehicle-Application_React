@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { Form } from 'semantic-ui-react';
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion/dist/framer-motion";
 
-function VehicleEditBody(props) {
+function VehicleEditBody({name, positionX, positionY, speed, direction, onClose, show, handleSave}) {
     const directions = [
         {
           label: "towards",
@@ -18,39 +21,124 @@ function VehicleEditBody(props) {
           label: "downwards",
           value: "downwards",
         },
-      ];
+    ];
+
+    const { 
+    register, handleSubmit, formState: { errors, dirtyFields } 
+    } = useForm({
+    defaultValues: {
+        vehicleName : name,
+        vPositionX : positionX,
+        vPositionY : positionY,
+        vSpeed : speed,
+        vDirection : direction
+    }
+    });
+
+    const onSubmit = (data) => {
+        handleSave(data);
+    }
+    
 
     return (
-        <form >
-            <div className="grid-container"> 
 
-                <label className='grid-item'>Name <br />
-                    <input type="text" value={props.name} onChange={e => props.setName(e.target.value)} />
-                </label>
+        <div className={`modal ${show ? 'show' : ''}`} onClick={onClose}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div className="modal-header">
+                    <h2 className="modal-title">Edit Vehicle</h2>
+                </div>
+                <div className="modal-body">
 
-                <label className='grid-item'>PositionX <br />
-                    <input type="number" value={props.positionX} onChange={e => props.setPositionX(e.target.value)} />
-                </label>
+                <Form onSubmit={handleSubmit(onSubmit)}>
 
-                <label className='grid-item'>PositionY <br />
-                    <input type="number" value={props.positionY} onChange={e => props.setPositionY(e.target.value)} />
-                </label>
+                    <Form.Field>
+                        <label>Vehicle Name</label>
+                        <input 
+                            placeholder='Vehicle Name' 
+                            type="text" 
+                            {...register("vehicleName", { 
+                            required: true, 
+                            pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                            })}
+                        />
+                    </Form.Field>
+                    {errors.vehicleName && dirtyFields.vehicleName && <p className="error">Name cannot have any special character excep "_"</p>}
 
-                <label className='grid-item'>Speed <br />
-                    <input type="number" value={props.speed} onChange={e => props.setSpeed(e.target.value)} />
-                </label>
+                    <Form.Field>
+                        <label>Position X</label>
+                        <input 
+                        placeholder='Position X'
+                        type="number" 
+                        {...register('vPositionX', {
+                            required: true,
+                            pattern: /^([1-9]|[1-9][0-9]{1,2}|1[0-3][0-9]{2}|1400)$/ 
+                        })}
+                        />
+                    </Form.Field>
+                    {errors.vPositionX && dirtyFields.vPositionX && <p className="error">Value must be in the range 1 and 1400</p>}
 
-                <label className='grid-item'>Direction <br />
-                    <select value={props.direction} onChange={e => props.setDirection(e.target.value)}>
+                    <Form.Field>
+                        <label>Position Y</label>
+                        <input 
+                        placeholder='Position Y'
+                        type="number" 
+                        {...register('vPositionY', {
+                            required: true,
+                            pattern: /^(1[0-9]|[2-9][0-9]|[1-5][0-9]{2}|6[0-8][0-9]|690)$/ 
+                        })}
+                        />
+                    </Form.Field>
+                    {errors.vPositionY && dirtyFields.vPositionY && <p className="error">Value must be in the range 10 and 690</p>}
+
+                    <Form.Field>
+                        <label>Direction</label>
+                        <select 
+                        {...register('vDirection', {
+                            required: true,
+                        })} 
+                        >
                         <option value="" disabled defaultValue='Select a direction' hidden>Select a direction</option>
-                        {directions.map((option) => (
+                            {directions.map((option) => (
                             <option key={option.value} value={option.value}>{option.label}</option>
-                        ))}
-                    </select>
-                </label>
+                            ))}
+                        </select>
+                    </Form.Field>
 
+                    <Form.Field>
+                        <label>Speed</label>
+                        <input 
+                        placeholder='Speed'
+                        type="number" 
+                        {...register('vSpeed', {
+                            required: true,
+                            pattern: /^([1-9]|1[0-9]|20)$/ 
+                        })}
+                        />
+                    </Form.Field>
+                    {errors.vSpeed && dirtyFields.vSpeed && <p className="error">Value must be in the range 1 and 20</p>}
+
+                    <div className="modal-footer">
+                        <motion.button 
+                            className="button blue-btn" 
+                            type="submit"
+                            whileTap={{scale : 0.9}}
+                        >
+                            Add
+                        </motion.button>
+
+                        <motion.button 
+                            className="button red-btn" 
+                            onClick={onClose}
+                            whileTap={{scale : 0.9}}
+                        >
+                            Close
+                        </motion.button>
+                    </div>
+                </Form>
+
+                </div>
             </div>
-        </form>
+        </div>
     )
 }
 
