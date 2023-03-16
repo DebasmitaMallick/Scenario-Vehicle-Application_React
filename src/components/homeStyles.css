@@ -11,9 +11,9 @@
   }
 
 
-  .home select {
+  /* .home select {
     width: 13.4rem !important;
-  }
+  } */
   
   .home select, .home option {
     font-size: 16px;

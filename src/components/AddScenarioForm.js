@@ -65,11 +65,11 @@ function AddScenarioForm() {
                 type="number" 
                 {...register("scenarioTime", { 
                   required: true, 
-                  pattern: /^[0-5]$/
+                  pattern: /^([1-9]|10)$/
                 })}
               />
           </Form.Field>
-          {errors.scenarioTime && dirtyFields.scenarioTime && <p className="error">Value must be in the range 1 and 5</p>}
+          {errors.scenarioTime && dirtyFields.scenarioTime && <p className="error">Value must be in the range 1 and 10</p>}
 
           <motion.button 
             className="button blue-btn" 

@@ -19,10 +19,10 @@ function Home() {
   const [isRefresh, setIsRefresh] = useState(false);
   const [refreshRequireVehicles, setRefreshRequireVehicles] = useState(false);
   const [requiredVehicles, setRequiredVehicles] = useState([]);
+  const [scenarioTime, setScenarioTime] = useState('');
 
   const controllerBtnRef = useRef();
   const carGridRef = useRef();
-
   useEffect(() => {
     setSimulate(false);
   }, [isRefresh, scenario]);
@@ -50,13 +50,19 @@ function Home() {
   }, [scenario, refreshRequireVehicles]);
 
   const handleFullScreen = useFullScreenHandle();
-  
+
+  const selectScenarioHandler = (e) => {
+    let scenarioData = JSON.parse(JSON.stringify(e.target.value)).split(",");
+    setScenario(scenarioData[0]);
+    setScenarioTime(scenarioData[1]);
+  }
+
   return (
     <div className='home'>
-      <select value={scenario} onChange={e => {setScenario(e.target.value);}}>
-        <option value="" disabled defaultValue='Select a Scenario' hidden>Select a Scenario</option>
+      <select value={`${scenario},${scenarioTime}`} onChange={e => selectScenarioHandler(e)} style={{width: '13.4rem'}}>
+        <option value="," disabled hidden>Select a Scenario</option>
           {scenarios.map((option) => (
-            <option key={option.id} value={option.id}>{option.name}</option>
+            <option key={option.id} value={`${option.id},${option.time}`}>{option.name}</option>
           ))}
       </select>
 
@@ -95,8 +101,8 @@ function Home() {
           )
         )
       }
-
       <FullScreen handle={handleFullScreen}>
+        {/* <div id="clock" style={{color: 'white'}}></div> */}
         <div className="carGrid" ref={carGridRef} style={{width: handleFullScreen.active ? '93.9%' : '94.9%'}} >
 
           {
@@ -105,7 +111,10 @@ function Home() {
               <>
                 <div className="controllerBtns" ref={controllerBtnRef} >
                   <motion.div 
-                    onClick={() => setSimulate(!simulate)} 
+                    onClick={() => {
+                      setSimulate(!simulate);
+                      // startTime();
+                    }} 
                     whileHover={{scale : 1.3}}
                   >
                     {
@@ -132,9 +141,18 @@ function Home() {
           }
           {
             requiredVehicles.length > 0 &&
-            requiredVehicles.map(sc => {
+            requiredVehicles.map(v => {
               return (
-                <Car key={sc.id} id={sc.id} posX={parseInt(sc.positionX)} posY={parseInt(sc.positionY)} direction={sc.direction} speed={parseInt(sc.speed)} simulate={simulate} />
+                <Car 
+                  key={v.id} 
+                  id={v.id} 
+                  posX={parseInt(v.positionX)} 
+                  posY={parseInt(v.positionY)} 
+                  direction={v.direction} 
+                  speed={parseInt(v.speed)} 
+                  scenarioTime={parseInt(scenarioTime)} 
+                  simulate={simulate} 
+                />
               )
             })
           }

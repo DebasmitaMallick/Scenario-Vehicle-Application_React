@@ -11,7 +11,7 @@
     {
       "id": "737",
       "name": "Forest",
-      "time": "3",
+      "time": "10",
       "vehicles": [
         "757",
         "373",
@@ -59,7 +59,7 @@
     {
       "id": "544",
       "name": "H1",
-      "speed": "11",
+      "speed": "5",
       "positionX": "500",
       "positionY": "690",
       "direction": "upwards",

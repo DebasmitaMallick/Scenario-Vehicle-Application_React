@@ -3,7 +3,7 @@ import { motion } from "framer-motion/dist/framer-motion";
 import './carStyles.css';
 import { useWindowSize } from '../hooks/useWindowSize';
 
-const Car = ({id, posX, posY, direction, speed, simulate}) => {
+const Car = ({id, posX, posY, direction, speed, simulate, scenarioTime}) => {
 
   // X -> 1-1400
   // Y -> 10 - 690
@@ -78,11 +78,13 @@ const Car = ({id, posX, posY, direction, speed, simulate}) => {
 
   useEffect(() => {
     if(simulate && move) {
-      const id = setInterval(increment, speedVals[speed-1]);
-      return () => clearInterval(id);
+      const speedInterval = setInterval(increment, speedVals[speed-1]);
+      setTimeout(function(){
+          clearInterval(speedInterval);
+      },scenarioTime*1000);
+      return () => clearInterval(speedInterval); 
     }
   }, [id, posX, posY, direction, speed, simulate]);
-
 
   return (
     <div>
@@ -91,7 +93,7 @@ const Car = ({id, posX, posY, direction, speed, simulate}) => {
           animate={{ x, y }}
           transition={{ type: "spring" }}
           initial={false} //to disable enter animation
-          exit={false}
+          exit={true}
         >
           <div className="sign">
             <span>{id}</span>

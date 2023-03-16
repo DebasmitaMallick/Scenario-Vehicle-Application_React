@@ -48,11 +48,11 @@ function ScenarioEditBody({name, time, show, onClose, handleSave}) {
                       type="number" 
                       {...register("scenarioTime", { 
                         required: true, 
-                        pattern: /^[0-5]$/
+                        pattern: /^([1-9]|10)$/
                       })}
                     />
                 </Form.Field>
-                {errors.scenarioTime && <p className="error">Value must be in the range 1 and 5</p>}
+                {errors.scenarioTime && <p className="error">Value must be in the range 1 and 10</p>}
 
                 <div className="modal-footer">
                   <motion.button 
@@ -60,7 +60,7 @@ function ScenarioEditBody({name, time, show, onClose, handleSave}) {
                     type="submit"
                     whileTap={{scale : 0.9}}
                   >
-                    Add
+                    Update
                   </motion.button>
 
                   <motion.button 

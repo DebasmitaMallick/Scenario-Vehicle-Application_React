@@ -68,7 +68,7 @@ function ScenarioItem(props) {
             <tr>    
                 <td>{props.scenario.id}</td>
                 <td>{name}</td>
-                <td>{time}</td>
+                <td>{time}s</td>
                 <td>{props.scenario.vehicles.length}</td>
                 <td><Link onClick={() => setActivePage('addvehiclesform')} to='/addvehiclesform' state={props.scenario}><FaPlusCircle className='add-icon' /></Link></td>
                 <td className='pointer' onClick={() => setShowEditModal(true)}><FaPencilAlt className='edit-icon' /></td>
