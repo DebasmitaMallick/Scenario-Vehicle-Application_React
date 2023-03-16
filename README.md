@@ -24,6 +24,10 @@ json-server is used for storing data use.
 
 For animation I have used Framer motion library.
 
+## Live project link
+
+https://scenario-vehicle-debz.netlify.app/
+
 ## Preview
 
 ![image](https://user-images.githubusercontent.com/67649413/225752761-d4548a20-cf53-46a1-9225-d18519f50c5f.png)
@@ -33,11 +37,8 @@ For animation I have used Framer motion library.
 ![image](https://user-images.githubusercontent.com/67649413/225753206-790208c8-9d07-4ab8-b6aa-794bda3380bc.png)
 ![image](https://user-images.githubusercontent.com/67649413/225753249-227e532e-3229-48d4-92c6-de5eb9014949.png)
 
-## Live project link
-https://scenario-vehicle-debz.netlify.app/
-
-
 ## `Tools Used`
+
 ### FRONTEND
 - React
 - CSS
