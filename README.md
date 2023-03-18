@@ -28,6 +28,16 @@ For animation I have used Framer motion library.
 ## Live project link
 
 https://scenario-vehicle-debz.netlify.app/
+Note ** You need to use json server at port 3001, to access the data for the application.
+
+## Steps to start the json server
+
+- Download the db.json file from this repository, and save it to your local machine
+- Open your command promt, go to the directory where you have saved the json file
+- Type -> `json-server --watch db.json --port 3001` 
+- Your json server will start at port 3001
+- Now you can play with the application
+
 
 ## Preview
 
