@@ -50,7 +50,7 @@
     {
       "id": "373",
       "name": "F2",
-      "speed": "12",
+      "speed": "20",
       "positionX": "10",
       "positionY": "10",
       "direction": "towards",

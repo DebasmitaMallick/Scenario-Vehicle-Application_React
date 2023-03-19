@@ -52,7 +52,6 @@ function AddVehiclesForm() {
     }, []);
 
     const onSubmit = (data) => {
-      let x = [];
 
       let vehicleId = (Math.floor(Math.random()*1000)).toString();
       axios
@@ -67,21 +66,11 @@ function AddVehiclesForm() {
       })
       .then(() => {
         //update parent scenario
-        axios.get(`${appUrl}/scenarios/${data.scenarioId}`).then((res) => {
-          x = res.data.vehicles;
-          x.push(vehicleId);
-          const temp = x;
-          axios
-          .patch(`${appUrl}/scenarios/${data.scenarioId}`, {
-              vehicles : temp
-          }).then(() => {
-            toast.success("Added Successfully", {
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 1000,
-            });
-            resetHandler();
-          });
-          });
+        toast.success("Added Successfully", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 1000,
+        })
+        resetHandler();
       });
     }
 
