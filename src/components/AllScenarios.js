@@ -65,7 +65,7 @@ function AllScenarios() {
               <tr>
                 <th>Scenario id</th>
                 <th>Scenario Name</th>
-                <th>Scenario Time</th>
+                <th>Scenario Duration</th>
                 <th>Number of Vehicles</th>
                 <th>Add Vehicles</th>
                 <th>Edit</th>

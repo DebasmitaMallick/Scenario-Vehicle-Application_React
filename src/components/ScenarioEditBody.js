@@ -29,30 +29,34 @@ function ScenarioEditBody({name, time, show, onClose, handleSave}) {
 
               <Form onSubmit={handleSubmit(onSubmit)}>
 
-                <Form.Field>
-                    <label>Scenario Name</label>
-                    <input 
-                      placeholder='Scenario Name' 
-                      type="text" 
-                      {...register("scenarioName", { 
-                        required: true,
-                        pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
-                      })}
-                    />
-                </Form.Field>
-                {errors.scenarioName && <p className="error">Name cannot have any special character excep "_"</p>}
-                <Form.Field>
-                    <label>Scenario Time</label>
-                    <input 
-                      placeholder='Scenario Time' 
-                      type="number" 
-                      {...register("scenarioTime", { 
-                        required: true, 
-                        pattern: /^([1-9]|10)$/
-                      })}
-                    />
-                </Form.Field>
-                {errors.scenarioTime && <p className="error">Value must be in the range 1 and 10</p>}
+                <div className='formContainer'>
+
+                  <Form.Field>
+                      <label>Scenario Name</label>
+                      <input 
+                        placeholder='Scenario Name' 
+                        type="text" 
+                        {...register("scenarioName", { 
+                          required: true,
+                          pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                        })}
+                      />
+                  </Form.Field>
+                  {errors.scenarioName && <p className="error">Name cannot have any special character excep "_"</p>}
+                  <Form.Field>
+                      <label>Scenario Duration</label>
+                      <input 
+                        placeholder='Scenario Duration' 
+                        type="number" 
+                        {...register("scenarioTime", { 
+                          required: true, 
+                          pattern: /^([1-9]|10)$/
+                        })}
+                      />
+                  </Form.Field>
+                  {errors.scenarioTime && <p className="error">Value must be in the range 1 and 10</p>}
+
+                </div>
 
                 <div className="modal-footer">
                   <motion.button 

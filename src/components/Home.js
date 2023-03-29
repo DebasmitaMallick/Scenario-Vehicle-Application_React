@@ -59,7 +59,7 @@ function Home() {
 
   return (
     <div className='home'>
-      <select value={`${scenario},${scenarioTime}`} onChange={e => selectScenarioHandler(e)} style={{width: '13.4rem'}}>
+      <select id="homeSelect" value={`${scenario},${scenarioTime}`} onChange={e => selectScenarioHandler(e)} style={{width: '13.4rem'}}>
         <option value="," disabled hidden>Select a Scenario</option>
           {scenarios.map((option) => (
             <option key={option.id} value={`${option.id},${option.time}`}>{option.name}</option>

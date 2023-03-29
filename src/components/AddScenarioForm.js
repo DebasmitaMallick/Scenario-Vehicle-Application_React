@@ -43,49 +43,54 @@ function AddScenarioForm() {
 
       <Form onSubmit={handleSubmit(onSubmit)} className='scenario'>
 
-          {/* alerting of errors */}
-          {!isValid && isSubmitted && !isSubmitSuccessful && <p className="error">Please fill out all the fields</p>}
+          <div className="formContainer">
 
-          <Form.Field>
-              <label>Scenario Name</label>
-              <input 
-                placeholder='Scenario Name' 
-                type="text" 
-                {...register("scenarioName", { 
-                  required: true,
-                  pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
-                })}
-              />
-          </Form.Field>
-          {errors.scenarioName && dirtyFields.scenarioName && <p className="error">Name cannot have any special character excep "_"</p>}
-          <Form.Field>
-              <label>Scenario Time</label>
-              <input 
-                placeholder='Scenario Time' 
-                type="number" 
-                {...register("scenarioTime", { 
-                  required: true, 
-                  pattern: /^([1-9]|10)$/
-                })}
-              />
-          </Form.Field>
-          {errors.scenarioTime && dirtyFields.scenarioTime && <p className="error">Value must be in the range 1 and 10</p>}
+            {/* alerting of errors */}
+            {!isValid && isSubmitted && !isSubmitSuccessful && <p className="error">Please fill out all the fields</p>}
 
-          <motion.button 
-            className="button blue-btn" 
-            type="submit"
-            whileTap={{scale : 0.9}}
-          >
-            Add
-          </motion.button>
+            <Form.Field>
+                <label>Scenario Name
+                  <input 
+                    placeholder='Scenario Name' 
+                    type="text" 
+                    {...register("scenarioName", { 
+                      required: true,
+                      pattern: /^[a-zA-Z0-9_/][a-zA-Z0-9_ ]*[a-zA-Z0-9_]$/
+                    })}
+                  />
+                </label>
+            </Form.Field>
+            {errors.scenarioName && dirtyFields.scenarioName && <p className="error">Name cannot have any special character excep "_"</p>}
+            <Form.Field>
+                <label>Scenario Duration
+                  <input 
+                    placeholder='Scenario Duration' 
+                    type="number" 
+                    {...register("scenarioTime", { 
+                      required: true, 
+                      pattern: /^([1-9]|10)$/
+                    })}
+                  />
+                </label>
+            </Form.Field>
+            {errors.scenarioTime && dirtyFields.scenarioTime && <p className="error">Value must be in the range 1 and 10</p>}
 
-          <motion.button 
-            className="button orange-btn" 
-            onClick={resetHandler}
-            whileTap={{scale : 0.9}}
-          >
-            Reset
-          </motion.button>
+            <motion.button 
+              className="button blue-btn" 
+              type="submit"
+              whileTap={{scale : 0.9}}
+            >
+              Add
+            </motion.button>
+
+            <motion.button 
+              className="button orange-btn" 
+              onClick={resetHandler}
+              whileTap={{scale : 0.9}}
+            >
+              Reset
+            </motion.button>
+          </div>
       </Form>
 
     </div>

@@ -24,16 +24,29 @@
   text-align: center;
 }
 
-input, select, option {
+option {
+  height: 1rem !important;
+  margin: 1rem !important;
+  line-height: 1rem !important;
+  padding: 5rem !important;
+  background: var(--darkgrey) !important;
+  font-size: 17px;
+}
+
+input, select {
   width: 13rem;
-  padding: 16px 20px;
-  margin: 8px 0;
+  font-size: 12px !important;
+  padding: 8px 13px !important;
   display: inline-block;
   border: 1px solid #b3b3b3;
   border-radius: 4px;
   box-sizing: border-box;
   background: var(--darkgrey);
   color: var(--white);
+}
+
+.ui.form .field {
+  margin: 0 0 2em !important;
 }
 
 .button {
@@ -51,7 +64,8 @@ input, select, option {
 
 .error {
   color: var(--errorRed);
-  text-align: initial !important;
+  text-align: left !important;
+  margin-left: -18px;
 }
 
 .green-btn {
@@ -214,6 +228,11 @@ a {
   margin: auto;
   border-radius: 12px;
   box-shadow: 9px 16px 29px 2px rgba(0,0,0,0.58);
+}
+
+.formContainer .field {
+  padding: 0 1rem;
+  text-align: left;
 }
 
 .scenario label {

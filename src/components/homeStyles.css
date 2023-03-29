@@ -1,5 +1,5 @@
 .home {
-    height: 78rem;
+    /* height: 78rem; */
     position: relative;
     margin-top: 3.5rem;
     background: var(--black);
@@ -15,10 +15,10 @@
     width: 13.4rem !important;
   } */
   
-  .home select, .home option {
-    font-size: 16px;
-    width: 11.7rem;
-    padding: 12px 20px;
+  #homeSelect, #homeSelect option {
+    font-size: 16px !important;
+    width: fit-content !important;
+    padding: 12px 20px !important;
     display: inline-block;
     border: 1px solid #b3b3b3;
     border-radius: 4px;
